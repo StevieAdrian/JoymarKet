@@ -46,6 +46,32 @@ public class User {
 		}
 		return false;
     }
+    
+    public static User findByEmail(String email) {
+    	User user = null;
+    	try {
+			String query = "SELECT * FROM users WHERE email = ?";
+			
+			var rs = DatabaseConnection.query(query, email);
+			
+			if (rs.next()) {
+	            user = new User(
+	                rs.getString("id"),
+	                rs.getString("full_name"),
+	                rs.getString("email"),
+	                rs.getString("password"),
+	                rs.getString("phone"),
+	                rs.getString("address"),
+	                rs.getString("gender"),
+	                rs.getInt("role")
+	            );
+	        }
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+    	 
+    	return user;
+    }
 
     public String getId() { return id; }
     public String getFullName() { return fullName; }

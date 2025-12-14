@@ -28,5 +28,17 @@ public class AuthController {
 		
 		return null;
 	}
+	
+	public static String login(String email, String password) {
+		if (email == null || email.isEmpty()) return "Email must be filled!";	
+		if (password == null || password.isEmpty()) return "Password must be filled!";
+		
+		User user = User.findByEmail(email);
+		
+		if (user == null) return "Email not registered!";
+		if (!user.getPassword().equals(password)) return "Wrong Password!";
+		
+		return "Success!";
+	}
 
 }

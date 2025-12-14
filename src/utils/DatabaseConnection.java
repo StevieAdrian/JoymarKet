@@ -3,6 +3,7 @@ package utils;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DatabaseConnection {
@@ -38,6 +39,21 @@ public class DatabaseConnection {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public static ResultSet query(String query, Object... params) {
+        try {
+            PreparedStatement ps = getConnection().prepareStatement(query);
+
+            for (int i = 0; i < params.length; i++) {
+                ps.setObject(i + 1, params[i]);
+            }
+
+            return ps.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

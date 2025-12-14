@@ -1,0 +1,83 @@
+package view.auth;
+
+import controller.AuthController;
+import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.VBox;
+import utils.AppManager;
+import view.page.Page;
+
+public class LoginPage extends Page {
+
+private VBox container;
+	
+	private Label titleLabel;
+	private Label errorLabel;
+	
+	private TextField emailField;
+	private PasswordField passwordField;
+	
+	private Button loginButton;
+	private Hyperlink registerLink;
+
+	@Override
+	protected void start() {
+		// TODO Auto-generated method stub
+		container = new VBox(10);
+
+        titleLabel = new Label("Register");
+        errorLabel = new Label();
+        
+        emailField = new TextField();
+        emailField.setPromptText("Email");
+        
+        passwordField = new PasswordField();
+        passwordField.setPromptText("Password");
+        
+        loginButton = new Button("Login");
+        registerLink = new Hyperlink("Don't have an account? Register");
+	}
+
+	@Override
+	protected void setLayout() {
+		// TODO Auto-generated method stub
+		container.getChildren().addAll(
+	            titleLabel,
+	            emailField,
+	            passwordField,
+	            errorLabel,
+	            loginButton,
+	            registerLink
+			);
+			
+			setCenter(container);
+	}
+
+	@Override
+	protected void setStyle() {
+		// TODO Auto-generated method stub
+		container.setStyle("-fx-alignment: center;");
+		errorLabel.setStyle("-fx-text-fill: red;");
+	}
+
+	@Override
+	protected void setEvent() {
+		// TODO Auto-generated method stub
+		loginButton.setOnAction(e -> {
+			String error = AuthController.login(emailField.getText(), passwordField.getText());
+			
+			if (error != null) errorLabel.setText(error);
+			else errorLabel.setText("");
+		});
+		
+		registerLink.setOnAction(e -> {
+			AppManager.navigate(new RegisterPage(), "Register");
+		});
+	}
+
+}

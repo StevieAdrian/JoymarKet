@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 import model.User;
+import utils.AppManager;
 import view.page.Page;
 
 public final class RegisterPage extends Page {
@@ -137,7 +138,7 @@ public final class RegisterPage extends Page {
 		});
 		
 		loginLink.setOnAction(e -> {
-			
+			AppManager.navigate(new LoginPage(), "Login");
 		});
 	}
 }
