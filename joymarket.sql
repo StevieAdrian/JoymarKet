@@ -34,7 +34,7 @@ CREATE TABLE `users` (
   `password` varchar(255) NOT NULL,
   `phone` varchar(25) NOT NULL,
   `address` varchar(255) NOT NULL,
-  `gender` enum('male','female','','') NOT NULL,
+  `gender` enum('Male','Female','','') NOT NULL,
   `role` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
