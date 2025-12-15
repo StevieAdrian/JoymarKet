@@ -1,14 +1,16 @@
 package controller;
 
 import javafx.scene.control.ToggleGroup;
+import model.Customer;
 import model.User;
 
 public class AuthController {
 
 	public static String register(User user, String confirmPassword) {
-		if (user.getId().isEmpty()) return "User ID must be filled!";
+		if (user.getIdUser().isEmpty()) return "User ID must be filled!";
 		if (user.getFullName().isEmpty()) return "Full name must be filled!";
 		if (!user.getEmail().endsWith("@gmail.com")) return "Email must end with @gmail.com!";
+		if (User.findByEmail(user.getEmail()) != null) return "Email already registered!";
 		if (user.getPassword().length() < 6) return "Password must be at least 6 characters!";
 		if (!user.getPassword().equals(confirmPassword)) return "Confirm password must match password!";
 		if (user.getPhone().isEmpty()) return "Phone must be filled!";
@@ -23,22 +25,33 @@ public class AuthController {
 		if (user.getAddress().isEmpty()) return "Address must be filled!";
 		if (user.getGender() == null) return "Gender must be chosen";
 		
-		boolean success = User.create(user);
+		Customer customer = new Customer(
+            user.getIdUser(),
+            user.getFullName(),
+            user.getEmail(),
+            user.getPassword(),
+            user.getPhone(),
+            user.getAddress(),
+            user.getGender()
+        );
+		
+		boolean success = customer.register();
 		if (!success) return "Failed to register user!";
 		
 		return null;
 	}
 	
-	public static String login(String email, String password) {
-		if (email == null || email.isEmpty()) return "Email must be filled!";	
-		if (password == null || password.isEmpty()) return "Password must be filled!";
-		
-		User user = User.findByEmail(email);
-		
-		if (user == null) return "Email not registered!";
-		if (!user.getPassword().equals(password)) return "Wrong Password!";
-		
-		return "Success!";
+	public static User login(String email, String password) {
+	    if (email == null || email.isEmpty()) return null;
+	    if (password == null || password.isEmpty()) return null;
+
+	    User user = User.findByEmail(email);
+
+	    if (user == null) return null;
+	    if (!user.getPassword().equals(password)) return null;
+
+	    return user;
 	}
+
 
 }

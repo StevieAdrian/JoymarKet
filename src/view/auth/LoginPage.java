@@ -9,6 +9,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
+import model.User;
 import utils.AppManager;
 import view.page.Page;
 
@@ -69,11 +70,19 @@ private VBox container;
 	protected void setEvent() {
 		// TODO Auto-generated method stub
 		loginButton.setOnAction(e -> {
-			String error = AuthController.login(emailField.getText(), passwordField.getText());
-			
-			if (error != null) errorLabel.setText(error);
-			else errorLabel.setText("");
+		    User user = AuthController.login(
+		        emailField.getText(),
+		        passwordField.getText()
+		    );
+
+		    if (user == null) {
+		        errorLabel.setText("Invalid email or password!");
+		        return;
+		    }
+
+		    errorLabel.setText("");
 		});
+
 		
 		registerLink.setOnAction(e -> {
 			AppManager.navigate(new RegisterPage(), "Register");

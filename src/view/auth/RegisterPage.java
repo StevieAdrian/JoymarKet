@@ -9,10 +9,9 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import controller.AuthController;
+import enums.Role;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.stage.Stage;
 import model.User;
 import utils.AppManager;
 import view.page.Page;
@@ -127,7 +126,7 @@ public final class RegisterPage extends Page {
 				phoneField.getText(),
 				addressField.getText(),
 				gender,
-				1
+				Role.CUSTOMER
 			);
 			
 			String error = AuthController.register(user, confirmPasswordField.getText());

@@ -1,20 +1,21 @@
 package model;
 
+import enums.Role;
 import utils.DatabaseConnection;
 
 public class User {
 
-    private String id;
+    protected String idUser;
     private String fullName;
     private String email;
     private String password;
     private String phone;
     private String address;
     private String gender;
-    private int role;
+    private Role role;
 
-    public User(String id, String fullName, String email, String password, String phone, String address, String gender, int role) {
-        this.id = id;
+    public User(String idUser, String fullName, String email, String password, String phone, String address, String gender, Role role) {
+        this.idUser = idUser;
         this.fullName = fullName;
         this.email = email;
         this.password = password;
@@ -26,19 +27,18 @@ public class User {
 
     public static boolean create(User user) {
     	try {
-    		String query = "INSERT INTO users (id, full_name, email, password, phone, address, gender, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    		String query = "INSERT INTO users (idUser, fullName, email, password, phone, address, gender, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     		
     		return DatabaseConnection.update(
                 query,
-                user.getId(),
+                user.getIdUser(),
                 user.getFullName(),
                 user.getEmail(),
                 user.getPassword(),
                 user.getPhone(),
                 user.getAddress(),
                 user.getGender(),
-                user.getRole()
-//    				0
+                user.getRole().name()
             );
 			
 		} catch (Exception e) {
@@ -56,14 +56,14 @@ public class User {
 			
 			if (rs.next()) {
 	            user = new User(
-	                rs.getString("id"),
-	                rs.getString("full_name"),
+	                rs.getString("idUser"),
+	                rs.getString("fullName"),
 	                rs.getString("email"),
 	                rs.getString("password"),
 	                rs.getString("phone"),
 	                rs.getString("address"),
 	                rs.getString("gender"),
-	                rs.getInt("role")
+	                Role.valueOf(rs.getString("role"))
 	            );
 	        }
 		} catch (Exception e) {
@@ -73,12 +73,12 @@ public class User {
     	return user;
     }
 
-    public String getId() { return id; }
+    public String getIdUser() { return idUser; }
     public String getFullName() { return fullName; }
     public String getEmail() { return email; }
     public String getPassword() { return password; }
     public String getPhone() { return phone; }
     public String getAddress() { return address; }
     public String getGender() { return gender; }
-    public int getRole() { return role; }
+    public Role getRole() { return role; }
 }
