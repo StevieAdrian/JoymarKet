@@ -11,6 +11,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 import model.User;
 import utils.AppManager;
+import view.ProductPage;
 import view.page.Page;
 
 public class LoginPage extends Page {
@@ -81,6 +82,18 @@ private VBox container;
 		    }
 
 		    errorLabel.setText("");
+
+		    switch (user.getRole()) {
+		        case CUSTOMER:
+		        	AppManager.navigate(new ProductPage(), "Customer");
+		        	break;
+//		        case ADMIN:
+//		        	AppManager.navigate(new , "Admin");
+//		        	break;
+//		        case COURIER:
+//		        	AppManager.navigate(new , "Courier");
+//		        	break;
+		    }
 		});
 
 		
