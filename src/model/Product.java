@@ -66,6 +66,11 @@ public class Product {
 
         return product;
     }
+    
+    public static boolean reduceStock(String idProduct, int qty) {
+        String query = "UPDATE products SET stock = stock - ? WHERE idProduct = ?";
+        return DatabaseConnection.update(query, qty, idProduct);
+    }
 
     public String getIdProduct() { return idProduct; }
     public String getName() { return name; }
