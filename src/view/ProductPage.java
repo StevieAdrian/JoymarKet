@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import controller.CustomerController;
 import controller.ProductController;
+import enums.Role;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.BorderPane;
@@ -47,16 +48,32 @@ public class ProductPage extends Page{
         Button viewCartBtn = new Button("View Cart");
         Button topUpBtn = new Button("Top Up");
         Button orderHistoryBtn = new Button("Order History");
+        Button adminOrdersBtn = new Button("View All Orders");
+
 
         viewCartBtn.setPrefWidth(100);
         topUpBtn.setPrefWidth(100);
         orderHistoryBtn.setPrefWidth(120);
+        adminOrdersBtn.setPrefWidth(140);
         
-        HBox actionBox = new HBox(10, viewCartBtn, topUpBtn, orderHistoryBtn);
+        HBox actionBox = new HBox(10);
         actionBox.setAlignment(Pos.CENTER_RIGHT);
 
+        Role role = AppManager.getCurrentUser().getRole();
+        
+        if (role == Role.CUSTOMER) {
+            actionBox.getChildren().addAll(viewCartBtn, topUpBtn, orderHistoryBtn);
+        } else if (role == Role.ADMIN) {
+            actionBox.getChildren().add(adminOrdersBtn);
+        }
+
         BorderPane header = new BorderPane();
-        header.setLeft(new VBox(5, title, balanceLabel));
+        VBox leftHeader = new VBox(5, title);
+
+        if (role == Role.CUSTOMER) {
+            leftHeader.getChildren().add(balanceLabel);
+        }
+        header.setLeft(leftHeader);
         header.setRight(actionBox);
 
         table = new TableView<>();
@@ -77,22 +94,22 @@ public class ProductPage extends Page{
         TableColumn<Product, Void> actionCol = new TableColumn<>("Action");
 
         actionCol.setCellFactory(col -> new TableCell<>() {
-            private final Button addBtn = new Button("Add");
+            private final Button actionBtn = new Button(AppManager.getCurrentUser().getRole() == Role.ADMIN ? "Edit Stock" : "Add");
             {
-                addBtn.setOnAction(e -> {
+                actionBtn.setMaxWidth(Double.MAX_VALUE);
+
+                actionBtn.setOnAction(e -> {
                     Product p = getTableView().getItems().get(getIndex());
 
-                    AppManager.navigate(new AddToCartPage(p), "Add To Cart");
+                    if (AppManager.getCurrentUser().getRole() == Role.ADMIN) AppManager.navigate(new EditProductStockPage(p), "Edit Product Stock");
+                    else AppManager.navigate(new AddToCartPage(p), "Add To Cart");
                 });
-
-                addBtn.setMaxWidth(Double.MAX_VALUE);
             }
-
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
                 if (empty) setGraphic(null);
-                else setGraphic(addBtn);
+                else setGraphic(actionBtn);
             }
         });
 
@@ -113,6 +130,10 @@ public class ProductPage extends Page{
         orderHistoryBtn.setOnAction(e ->
 		    AppManager.navigate(new OrderHistoryPage(), "Order History")
 		);
+        
+        adminOrdersBtn.setOnAction(e ->
+	        AppManager.navigate(new AdminOrderPage(), "All Orders")
+	    );
 
         container.getChildren().addAll(header, table);
         setCenter(container);

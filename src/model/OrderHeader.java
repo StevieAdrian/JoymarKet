@@ -60,7 +60,32 @@ public class OrderHeader {
         return orders;
     }
 	
+	public static ArrayList<OrderHeader> findAll() {
+	    ArrayList<OrderHeader> orders = new ArrayList<>();
+
+	    String query = "SELECT * FROM order_headers";
+
+	    try {
+	        var rs = DatabaseConnection.query(query);
+	        while (rs.next()) {
+	            orders.add(new OrderHeader(
+	                rs.getString("idOrder"),
+	                rs.getString("idCustomer"),
+	                rs.getString("status"),
+	                rs.getDate("orderedAt").toLocalDate(),
+	                rs.getDouble("totalAmount")
+	            ));
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return orders; 
+	}
+
+	
 	public String getIdOrder() { return idOrder; }
+	public String getIdCustomer() { return idCustomer; }
 	public String getStatus() { return status; }
 	public LocalDate getOrderedAt() { return orderedAt; }
 	public double getTotalAmount() { return totalAmount; }
