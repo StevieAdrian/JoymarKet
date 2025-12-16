@@ -42,6 +42,30 @@ public class Product {
 
         return products;
     }
+    
+    public static Product findById(String idProduct) {
+        Product product = null;
+
+        try {
+            String query = "SELECT * FROM products WHERE idProduct = ?";
+            var rs = DatabaseConnection.query(query, idProduct);
+
+            if (rs.next()) {
+                product = new Product(
+                    rs.getString("idProduct"),
+                    rs.getString("name"),
+                    rs.getDouble("price"),
+                    rs.getInt("stock"),
+                    rs.getString("category")
+                );
+            }
+            System.out.println("DEBUG findById id = " + idProduct);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return product;
+    }
 
     public String getIdProduct() { return idProduct; }
     public String getName() { return name; }

@@ -2,11 +2,13 @@ package utils;
 
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import model.User;
 import view.page.Page;
 
 public final class AppManager {
 	private static Stage stage;
 	private static Scene scene;
+	private static User currentUser;
 	
 	private AppManager() {}
 	
@@ -22,7 +24,16 @@ public final class AppManager {
 	}
 	
 	public static void navigate(Page page, String title) {
+		page.initialize();
         scene.setRoot(page);
         stage.setTitle(title);
+    }
+
+	public static void setCurrentUser(User user) {
+        currentUser = user;
+    }
+
+    public static User getCurrentUser() {
+        return currentUser;
     }
 }
