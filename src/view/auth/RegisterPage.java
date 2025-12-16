@@ -38,6 +38,10 @@ public final class RegisterPage extends Page {
 	private Button registerButton;
 	private Hyperlink loginLink;
 	
+	public RegisterPage() {
+        init();
+    }
+	
 	@Override
 	public void start() {
 		container = new VBox(10);

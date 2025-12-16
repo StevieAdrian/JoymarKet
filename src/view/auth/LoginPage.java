@@ -26,7 +26,11 @@ private VBox container;
 	
 	private Button loginButton;
 	private Hyperlink registerLink;
-
+	
+	public LoginPage() {
+        init();
+    }
+	
 	@Override
 	protected void start() {
 		// TODO Auto-generated method stub
@@ -82,7 +86,8 @@ private VBox container;
 		    }
 
 		    errorLabel.setText("");
-
+		    AppManager.setCurrentUser(user);
+		    
 		    switch (user.getRole()) {
 		        case CUSTOMER:
 		        	AppManager.navigate(new ProductPage(), "Customer");
