@@ -12,5 +12,8 @@ public class OrderController {
         
         return OrderHeader.findByCustomer(customerId);
     }
-
+	
+	public static ArrayList<OrderHeader> getAllOrders() {
+	    return OrderHeader.findAll();
+	}
 }

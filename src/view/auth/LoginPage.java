@@ -11,6 +11,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 import model.User;
 import utils.AppManager;
+import view.AdminOrderPage;
 import view.ProductPage;
 import view.page.Page;
 
@@ -92,9 +93,9 @@ private VBox container;
 		        case CUSTOMER:
 		        	AppManager.navigate(new ProductPage(), "Customer");
 		        	break;
-//		        case ADMIN:
-//		        	AppManager.navigate(new , "Admin");
-//		        	break;
+		        case ADMIN:
+		        	AppManager.navigate(new ProductPage(), "Admin");
+		        	break;
 //		        case COURIER:
 //		        	AppManager.navigate(new , "Courier");
 //		        	break;

@@ -59,7 +59,6 @@ public class Product {
                     rs.getString("category")
                 );
             }
-            System.out.println("DEBUG findById id = " + idProduct);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -70,6 +69,11 @@ public class Product {
     public static boolean reduceStock(String idProduct, int qty) {
         String query = "UPDATE products SET stock = stock - ? WHERE idProduct = ?";
         return DatabaseConnection.update(query, qty, idProduct);
+    }
+    
+    public static boolean updateStock(String productId, int stock) {
+        String query = "UPDATE products SET stock = ? WHERE idProduct = ?";
+        return DatabaseConnection.update(query, stock, productId);
     }
 
     public String getIdProduct() { return idProduct; }
