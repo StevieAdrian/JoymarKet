@@ -2,6 +2,7 @@ package view;
 
 import java.util.ArrayList;
 
+import controller.CustomerController;
 import controller.ProductController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -34,9 +35,12 @@ public class ProductPage extends Page{
         Label title = new Label("Product List");
         title.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
         
-        Button viewCartBtn = new Button("View Cart");
+        Label balanceLabel = new Label("Balance: Rp " + CustomerController.getCurrentBalance());
 
-        HBox header = new HBox(20, title, viewCartBtn);
+        Button viewCartBtn = new Button("View Cart");
+        Button topUpBtn = new Button("Top Up");
+        
+        HBox header = new HBox(20, title, balanceLabel, viewCartBtn, topUpBtn);
         header.setAlignment(Pos.CENTER_LEFT);
         
         GridPane table = new GridPane();
@@ -72,6 +76,10 @@ public class ProductPage extends Page{
         
         viewCartBtn.setOnAction(e -> {
             AppManager.navigate(new ViewCartPage(), "My Cart");
+        });
+        
+        topUpBtn.setOnAction(e -> {
+            AppManager.navigate(new TopUpPage(), "Top Up");
         });
         
         container.getChildren().addAll(header, table);
