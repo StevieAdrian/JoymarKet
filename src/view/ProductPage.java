@@ -6,6 +6,7 @@ import controller.CustomerController;
 import controller.ProductController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -13,11 +14,16 @@ import model.Product;
 import utils.AppManager;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import view.page.Page;
 
 public class ProductPage extends Page{
 
 	private VBox container;
+	private TableView<Product> table;
 	
 	 public ProductPage() {
         super();
@@ -33,55 +39,81 @@ public class ProductPage extends Page{
     @Override
     protected void setLayout() {
         Label title = new Label("Product List");
-        title.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
-        
+        title.setStyle("-fx-font-size: 22px; -fx-font-weight: bold;");
+
         Label balanceLabel = new Label("Balance: Rp " + CustomerController.getCurrentBalance());
+        balanceLabel.setStyle("-fx-font-size: 14px;");
 
         Button viewCartBtn = new Button("View Cart");
         Button topUpBtn = new Button("Top Up");
-        
-        HBox header = new HBox(20, title, balanceLabel, viewCartBtn, topUpBtn);
-        header.setAlignment(Pos.CENTER_LEFT);
-        
-        GridPane table = new GridPane();
-        table.setHgap(15);
-        table.setVgap(10);
+        Button orderHistoryBtn = new Button("Order History");
 
-        table.add(new Label("Name"), 0, 0);
-        table.add(new Label("Price"), 1, 0);
-        table.add(new Label("Stock"), 2, 0);
-        table.add(new Label("Category"), 3, 0);
-		table.add(new Label("Action"), 4, 0);
+        viewCartBtn.setPrefWidth(100);
+        topUpBtn.setPrefWidth(100);
+        orderHistoryBtn.setPrefWidth(120);
+        
+        HBox actionBox = new HBox(10, viewCartBtn, topUpBtn, orderHistoryBtn);
+        actionBox.setAlignment(Pos.CENTER_RIGHT);
+
+        BorderPane header = new BorderPane();
+        header.setLeft(new VBox(5, title, balanceLabel));
+        header.setRight(actionBox);
+
+        table = new TableView<>();
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        TableColumn<Product, String> nameCol = new TableColumn<>("Name");
+        nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+        TableColumn<Product, Double> priceCol = new TableColumn<>("Price");
+        priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+        TableColumn<Product, Integer> stockCol = new TableColumn<>("Stock");
+        stockCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
+
+        TableColumn<Product, String> categoryCol = new TableColumn<>("Category");
+        categoryCol.setCellValueFactory(new PropertyValueFactory<>("category"));
+
+        TableColumn<Product, Void> actionCol = new TableColumn<>("Action");
+
+        actionCol.setCellFactory(col -> new TableCell<>() {
+            private final Button addBtn = new Button("Add");
+            {
+                addBtn.setOnAction(e -> {
+                    Product p = getTableView().getItems().get(getIndex());
+
+                    AppManager.navigate(new AddToCartPage(p), "Add To Cart");
+                });
+
+                addBtn.setMaxWidth(Double.MAX_VALUE);
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) setGraphic(null);
+                else setGraphic(addBtn);
+            }
+        });
+
+        table.getColumns().addAll(nameCol, priceCol, stockCol, categoryCol, actionCol);
 
         ArrayList<Product> products = ProductController.getProducts();
 
-        int i = 1;
-        for (Product p : products) {
-            table.add(new Label(p.getName()), 0, i);
-            table.add(new Label("Rp " + p.getPrice()), 1, i);
-            table.add(new Label(String.valueOf(p.getStock())), 2, i);
-            table.add(new Label(p.getCategory()), 3, i);
+        table.getItems().addAll(products);
 
-			Button addBtn = new Button("Add");
-            table.add(addBtn, 4, i);
+        viewCartBtn.setOnAction(e ->
+            AppManager.navigate(new ViewCartPage(), "My Cart")
+        );
 
-            addBtn.setOnAction(e -> {
-            	System.out.println("DEBUG Product ID = " + p.getIdProduct());
-
-            	AppManager.navigate(new AddToCartPage(p), "Add To Cart");
-            });
-
-            i++;
-        }
+        topUpBtn.setOnAction(e ->
+            AppManager.navigate(new TopUpPage(), "Top Up")
+        );
         
-        viewCartBtn.setOnAction(e -> {
-            AppManager.navigate(new ViewCartPage(), "My Cart");
-        });
-        
-        topUpBtn.setOnAction(e -> {
-            AppManager.navigate(new TopUpPage(), "Top Up");
-        });
-        
+        orderHistoryBtn.setOnAction(e ->
+		    AppManager.navigate(new OrderHistoryPage(), "Order History")
+		);
+
         container.getChildren().addAll(header, table);
         setCenter(container);
     }

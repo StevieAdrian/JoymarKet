@@ -3,9 +3,11 @@ package view;
 import javax.management.RuntimeErrorException;
 
 import controller.CartController;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import model.Product;
 import utils.AppManager;
@@ -30,17 +32,29 @@ public class AddToCartPage extends Page {
     @Override
     protected void setLayout() {
         Label title = new Label("Add To Cart");
+        title.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
+
         Label nameLabel = new Label("Product : " + product.getName());
         Label stockLabel = new Label("Stock   : " + product.getStock());
 
+        VBox infoBox = new VBox(5, nameLabel, stockLabel);
+        infoBox.setAlignment(Pos.CENTER_LEFT);
+
         TextField qtyField = new TextField();
         qtyField.setPromptText("Quantity");
+        qtyField.setMaxWidth(Double.MAX_VALUE);
 
         Label errorLabel = new Label();
         errorLabel.setStyle("-fx-text-fill: red;");
 
         Button addBtn = new Button("Add");
         Button backBtn = new Button("Back");
+
+        addBtn.setPrefWidth(100);
+        backBtn.setPrefWidth(100);
+
+        HBox buttonBox = new HBox(10, backBtn, addBtn);
+        buttonBox.setAlignment(Pos.CENTER);
 
         addBtn.setOnAction(e -> {
             String error = CartController.addToCart(product, qtyField.getText());
@@ -57,12 +71,10 @@ public class AddToCartPage extends Page {
 
         container.getChildren().addAll(
             title,
-            nameLabel,
-            stockLabel,
+            infoBox,
             qtyField,
             errorLabel,
-            addBtn,
-            backBtn
+            buttonBox
         );
 
         setCenter(container);
