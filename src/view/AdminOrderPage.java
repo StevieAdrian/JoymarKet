@@ -7,6 +7,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -68,8 +69,27 @@ public class AdminOrderPage extends Page {
 
 		TableColumn<OrderHeader, Double> totalCol = new TableColumn<>("Total");
 		totalCol.setCellValueFactory(new PropertyValueFactory<>("totalAmount"));
+		
+		TableColumn<OrderHeader, Void> actionCol = new TableColumn<>("Action");
+		actionCol.setPrefWidth(120);
 
-		table.getColumns().addAll(idCol, customerCol, dateCol, statusCol, totalCol);
+		actionCol.setCellFactory(col -> new TableCell<>() {
+		    private final Button assignBtn = new Button("Assign");
+		    {
+		        assignBtn.setOnAction(e -> {
+		            OrderHeader order = getTableView().getItems().get(getIndex());
+		            AppManager.navigate(new AssignOrderPage(order), "Assign Courier");
+		        });
+		    }
+
+		    @Override
+		    protected void updateItem(Void item, boolean empty) {
+		        super.updateItem(item, empty);
+		        setGraphic(empty ? null : assignBtn);
+		    }
+		});
+		
+		table.getColumns().addAll(idCol, customerCol, dateCol, statusCol, totalCol, actionCol);
 
 		ArrayList<OrderHeader> orders = OrderController.getAllOrders();
 		table.getItems().addAll(orders);
