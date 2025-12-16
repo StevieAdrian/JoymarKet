@@ -83,4 +83,11 @@ public class Cart {
         String query = "DELETE FROM cart_items WHERE idCustomer = ? AND idProduct = ?";
         return DatabaseConnection.update(query, idCustomer, idProduct);
     }
+
+    public static boolean clear(String idCustomer) {
+        String query = "DELETE FROM cart_items WHERE idCustomer = ?";
+            
+        return DatabaseConnection.update(query, idCustomer);
+    }
+
 }

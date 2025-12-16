@@ -46,12 +46,23 @@ public final class Seeder {
         DatabaseConnection.update(query);
     }
 
+    private static void seedPromos() {
+        String query =
+            "INSERT INTO promos (idPromo, code, headline, discountPercentage) VALUES " +
+            "('PR001', 'PROMO10', 'Discount 10%', 10), " +
+            "('PR002', 'PROMO20', 'Discount 20%', 20), " +
+            "('PR003', 'PROMO5',  'Discount 5%', 5)";
+
+        DatabaseConnection.update(query);
+    }
+
     public static void run() {
         seedUsers();
         seedCustomers();
         seedAdmins();
         seedCouriers();
         seedProducts();
+        seedPromos();
 
         System.out.println("Seeder executed successfully.");
     }

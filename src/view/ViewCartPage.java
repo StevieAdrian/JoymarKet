@@ -112,7 +112,7 @@ public class ViewCartPage extends Page {
         checkoutBtn.setDisable(carts.isEmpty()); 
 
         checkoutBtn.setOnAction(e -> {
-            System.out.println("to be implemented");
+        	AppManager.navigate(new CheckoutPage(), "Checkout");
         });
 
         HBox footer = new HBox(20, totalLabel, checkoutBtn);
