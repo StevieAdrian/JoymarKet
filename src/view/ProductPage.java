@@ -48,13 +48,15 @@ public class ProductPage extends Page{
         Button viewCartBtn = new Button("View Cart");
         Button topUpBtn = new Button("Top Up");
         Button orderHistoryBtn = new Button("Order History");
+        
         Button adminOrdersBtn = new Button("View All Orders");
-
+        Button adminCouriersBtn = new Button("View All Couriers");
 
         viewCartBtn.setPrefWidth(100);
         topUpBtn.setPrefWidth(100);
         orderHistoryBtn.setPrefWidth(120);
         adminOrdersBtn.setPrefWidth(140);
+        adminCouriersBtn.setPrefWidth(140);
         
         HBox actionBox = new HBox(10);
         actionBox.setAlignment(Pos.CENTER_RIGHT);
@@ -64,7 +66,7 @@ public class ProductPage extends Page{
         if (role == Role.CUSTOMER) {
             actionBox.getChildren().addAll(viewCartBtn, topUpBtn, orderHistoryBtn);
         } else if (role == Role.ADMIN) {
-            actionBox.getChildren().add(adminOrdersBtn);
+            actionBox.getChildren().addAll(adminOrdersBtn, adminCouriersBtn);
         }
 
         BorderPane header = new BorderPane();
@@ -133,6 +135,10 @@ public class ProductPage extends Page{
         
         adminOrdersBtn.setOnAction(e ->
 	        AppManager.navigate(new AdminOrderPage(), "All Orders")
+	    );
+        
+        adminCouriersBtn.setOnAction(e ->
+	        AppManager.navigate(new AdminCourierPage(), "All Couriers")
 	    );
 
         container.getChildren().addAll(header, table);

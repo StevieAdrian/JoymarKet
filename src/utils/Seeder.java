@@ -6,11 +6,14 @@ public final class Seeder {
             "INSERT INTO users (idUser, fullName, email, password, phone, address, gender, role) VALUES " +
             "('U001', 'Stevie Customer', 'stevie@gmail.com', 'password', '081234567890', 'Jakarta', 'Male', 'CUSTOMER'), " +
             "('U002', 'Charelle Admin', 'charelle@gmail.com', 'password', '081234567891', 'Bandung', 'Female', 'ADMIN'), " +
-            "('U003', 'Rendy Courier', 'rendy@gmail.com', 'password', '081234567892', 'Surabaya', 'Male', 'COURIER')";
+            "('U003', 'Rendy Courier', 'rendy@gmail.com', 'password', '081234567892', 'Surabaya', 'Male', 'COURIER'), " +
+            "('U004', 'Keane Courier', 'keane@gmail.com', 'password', '082143569876', 'Mongol', 'Male', 'COURIER'), " +
+            "('U005', 'Adrian Courier', 'adrian@gmail.com', 'password', '089507119766', 'Martinique', 'Male', 'COURIER')"; 
+
         DatabaseConnection.update(query);
     }
 
-	 private static void seedCustomers() {
+	private static void seedCustomers() {
         String query =
             "INSERT INTO customers (idUser, balance) VALUES " +
             "('U001', 100000)";

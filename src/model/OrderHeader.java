@@ -82,6 +82,12 @@ public class OrderHeader {
 
 	    return orders; 
 	}
+	
+	public static boolean updateStatus(String idOrder, Status status) {
+	    String query = "UPDATE order_headers SET status = ? WHERE idOrder = ?";
+
+	    return DatabaseConnection.update(query, status.name(), idOrder);
+	}
 
 	
 	public String getIdOrder() { return idOrder; }
