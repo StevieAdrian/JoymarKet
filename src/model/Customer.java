@@ -22,8 +22,23 @@ public class Customer extends User {
         return DatabaseConnection.update(query, this.idUser, this.balance);
     }
 	 
-	 public double getBalance() {
-        return balance;
-    }
+	 public static double getBalance(String idCustomer) {
+	    String query = "SELECT balance FROM customers WHERE idUser = ?";
+	    try {
+	        var rs = DatabaseConnection.query(query, idCustomer);
+	        if (rs.next()) {
+	            return rs.getDouble("balance");
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return 0;
+	}
+
+	 
+	 public static boolean topUp(String idCustomer, double amount) {
+	    String query = "UPDATE customers SET balance = balance + ? WHERE idUser = ?";
+	    return DatabaseConnection.update(query, amount, idCustomer);
+	}
 
 }

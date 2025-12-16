@@ -2,9 +2,12 @@ package view;
 
 import java.util.ArrayList;
 
+import controller.CustomerController;
 import controller.ProductController;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import model.Product;
 import utils.AppManager;
@@ -32,6 +35,14 @@ public class ProductPage extends Page{
         Label title = new Label("Product List");
         title.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
         
+        Label balanceLabel = new Label("Balance: Rp " + CustomerController.getCurrentBalance());
+
+        Button viewCartBtn = new Button("View Cart");
+        Button topUpBtn = new Button("Top Up");
+        
+        HBox header = new HBox(20, title, balanceLabel, viewCartBtn, topUpBtn);
+        header.setAlignment(Pos.CENTER_LEFT);
+        
         GridPane table = new GridPane();
         table.setHgap(15);
         table.setVgap(10);
@@ -57,16 +68,21 @@ public class ProductPage extends Page{
             addBtn.setOnAction(e -> {
             	System.out.println("DEBUG Product ID = " + p.getIdProduct());
 
-            	AppManager.navigate(
-            	        new AddToCartPage(p),
-            	        "Add To Cart"
-            	    );
+            	AppManager.navigate(new AddToCartPage(p), "Add To Cart");
             });
 
             i++;
         }
-
-        container.getChildren().addAll(title, table);
+        
+        viewCartBtn.setOnAction(e -> {
+            AppManager.navigate(new ViewCartPage(), "My Cart");
+        });
+        
+        topUpBtn.setOnAction(e -> {
+            AppManager.navigate(new TopUpPage(), "Top Up");
+        });
+        
+        container.getChildren().addAll(header, table);
         setCenter(container);
     }
 
