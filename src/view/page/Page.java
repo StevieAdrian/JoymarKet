@@ -5,11 +5,19 @@ import javafx.stage.Stage;
 
 public abstract class Page extends BorderPane {
 
-	 protected Page() {
+	public Page() {
+		
+    }
+    
+    protected void init() {
         start();
         setLayout();
         setStyle();
         setEvent();
+    }
+    
+    public void initialize() {	
+        init();
     }
 	 
     protected abstract void start();
