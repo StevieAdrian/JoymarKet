@@ -7,12 +7,19 @@ import javafx.geometry.Insets;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import model.Product;
+import utils.AppManager;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import view.page.Page;
 
 public class ProductPage extends Page{
 
 	private VBox container;
+	
+	 public ProductPage() {
+        super();
+        init();
+    }
 
     @Override
     protected void start() {
@@ -24,7 +31,7 @@ public class ProductPage extends Page{
     protected void setLayout() {
         Label title = new Label("Product List");
         title.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
-
+        
         GridPane table = new GridPane();
         table.setHgap(15);
         table.setVgap(10);
@@ -33,6 +40,7 @@ public class ProductPage extends Page{
         table.add(new Label("Price"), 1, 0);
         table.add(new Label("Stock"), 2, 0);
         table.add(new Label("Category"), 3, 0);
+		table.add(new Label("Action"), 4, 0);
 
         ArrayList<Product> products = ProductController.getProducts();
 
@@ -42,6 +50,19 @@ public class ProductPage extends Page{
             table.add(new Label("Rp " + p.getPrice()), 1, i);
             table.add(new Label(String.valueOf(p.getStock())), 2, i);
             table.add(new Label(p.getCategory()), 3, i);
+
+			Button addBtn = new Button("Add");
+            table.add(addBtn, 4, i);
+
+            addBtn.setOnAction(e -> {
+            	System.out.println("DEBUG Product ID = " + p.getIdProduct());
+
+            	AppManager.navigate(
+            	        new AddToCartPage(p),
+            	        "Add To Cart"
+            	    );
+            });
+
             i++;
         }
 
