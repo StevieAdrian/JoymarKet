@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 import model.User;
 import utils.AppManager;
 import view.AdminOrderPage;
+import view.CourierDeliveryPage;
 import view.ProductPage;
 import view.page.Page;
 
@@ -96,9 +97,9 @@ private VBox container;
 		        case ADMIN:
 		        	AppManager.navigate(new ProductPage(), "Admin");
 		        	break;
-//		        case COURIER:
-//		        	AppManager.navigate(new , "Courier");
-//		        	break;
+		        case COURIER:
+		        	AppManager.navigate(new CourierDeliveryPage(), "Courier");
+		        	break;
 		    }
 		});
 
