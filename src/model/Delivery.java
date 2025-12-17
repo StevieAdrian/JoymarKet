@@ -44,10 +44,10 @@ public class Delivery {
         return list;
     }
 
-    public static boolean updateStatus(String idOrder, String idCourier, String status) {
+    public static boolean updateStatus(String idOrder, String idCourier, Status status) {
         String query = "UPDATE deliveries SET status = ? WHERE idOrder = ? AND idCourier = ?";
 
-        return DatabaseConnection.update(query, status, idOrder, idCourier);
+        return DatabaseConnection.update(query, status.name(), idOrder, idCourier);
     }
 
     public String getIdOrder() { return idOrder; }

@@ -72,6 +72,13 @@ public class User {
     	 
     	return user;
     }
+    
+    public static boolean updateProfile(String idUser, String fullName, String phone, String address) {
+	    String query = "UPDATE users SET fullName = ?, phone = ?, address = ? WHERE idUser = ?";
+
+	    return DatabaseConnection.update(query, fullName, phone, address, idUser);
+	}
+
 
     public String getIdUser() { return idUser; }
     public String getFullName() { return fullName; }
@@ -81,4 +88,16 @@ public class User {
     public String getAddress() { return address; }
     public String getGender() { return gender; }
     public Role getRole() { return role; }
+    
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 }
