@@ -2,8 +2,8 @@ package view;
 
 import java.util.ArrayList;
 
-import controller.CourierController;
-import controller.DeliveryController;
+import controller.CourierHandler;
+import controller.DeliveryHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -45,7 +45,7 @@ public class AssignOrderPage extends Page {
 	        courierBox = new ComboBox<>();
 	        courierBox.setPromptText("Select Courier");
 
-	        ArrayList<Courier> couriers = CourierController.getAllCouriers();
+	        ArrayList<Courier> couriers = CourierHandler.getAllCouriers();
 	        courierBox.getItems().addAll(couriers);
 
 	        courierBox.setCellFactory(cb -> new javafx.scene.control.ListCell<>() {
@@ -86,7 +86,7 @@ public class AssignOrderPage extends Page {
 	    private void handleAssign() {
 	        Courier selected = courierBox.getValue();
 
-	        String error = DeliveryController.assignCourier(order.getIdOrder(), selected != null ? selected.getIdUser() : null);
+	        String error = DeliveryHandler.assignCourierToOrder(order.getIdOrder(), selected != null ? selected.getIdUser() : null);
 
 	        if (error != null) {
 	            errorLabel.setText(error);

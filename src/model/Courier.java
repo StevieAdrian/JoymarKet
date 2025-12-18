@@ -16,7 +16,7 @@ public class Courier extends User {
         this.vehiclePlate = vehiclePlate;
     }
     
-    public static ArrayList<Courier> findAll() {
+    public static ArrayList<Courier> getAllCouriers() {
         ArrayList<Courier> couriers = new ArrayList<>();
 
         String query = "SELECT u.*, c.vehicleType, c.vehiclePlate FROM users u JOIN couriers c ON u.idUser = c.idUser";

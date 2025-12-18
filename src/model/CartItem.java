@@ -4,12 +4,12 @@ import java.util.ArrayList;
 
 import utils.DatabaseConnection;
 
-public class Cart {
+public class CartItem {
 
 	private Product product;
     private int qty;
 
-    public Cart(Product product, int qty) {
+    public CartItem(Product product, int qty) {
         this.product = product;
         this.qty = qty;
     }
@@ -48,8 +48,8 @@ public class Cart {
         return false;
     }
 	
-	public static ArrayList<Cart> getByCustomer(String idCustomer) {
-        ArrayList<Cart> carts = new ArrayList<>();
+	public static ArrayList<CartItem> getCartItems(String idCustomer) {
+        ArrayList<CartItem> cartItems = new ArrayList<>();
 
         String query = "SELECT p.idProduct, p.name, p.price, p.stock, p.category, c.count FROM cart_items c JOIN products p ON c.idProduct = p.idProduct WHERE c.idCustomer = ?";
 
@@ -65,21 +65,21 @@ public class Cart {
                     rs.getString("category")
                 );
 
-                carts.add(new Cart(product, rs.getInt("count")));
+                cartItems.add(new CartItem(product, rs.getInt("count")));
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return carts;
+        return cartItems;
     }
 	
-	public static boolean updateQty(String idCustomer, String idProduct, int qty) {
+	public static boolean editCartItem(String idCustomer, String idProduct, int qty) {
         String query = "UPDATE cart_items SET count = ? WHERE idCustomer = ? AND idProduct = ?";
         return DatabaseConnection.update(query, qty, idCustomer, idProduct);
     }
 
-    public static boolean remove(String idCustomer, String idProduct) {
+    public static boolean deleteCartItem(String idCustomer, String idProduct) {
         String query = "DELETE FROM cart_items WHERE idCustomer = ? AND idProduct = ?";
         return DatabaseConnection.update(query, idCustomer, idProduct);
     }

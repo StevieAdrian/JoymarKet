@@ -73,7 +73,7 @@ public class User {
     	return user;
     }
     
-    public static boolean updateProfile(String idUser, String fullName, String phone, String address) {
+    public static boolean editProfile(String idUser, String fullName, String phone, String address) {
 	    String query = "UPDATE users SET fullName = ?, phone = ?, address = ? WHERE idUser = ?";
 
 	    return DatabaseConnection.update(query, fullName, phone, address, idUser);

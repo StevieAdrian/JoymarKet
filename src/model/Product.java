@@ -43,7 +43,7 @@ public class Product {
         return products;
     }
     
-    public static Product findById(String idProduct) {
+    public static Product getProduct(String idProduct) {
         Product product = null;
 
         try {
@@ -71,7 +71,7 @@ public class Product {
         return DatabaseConnection.update(query, qty, idProduct);
     }
     
-    public static boolean updateStock(String productId, int stock) {
+    public static boolean editProductStock(String productId, int stock) {
         String query = "UPDATE products SET stock = ? WHERE idProduct = ?";
         return DatabaseConnection.update(query, stock, productId);
     }

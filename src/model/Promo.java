@@ -16,7 +16,7 @@ public class Promo {
 		this.discountPercentage = discountPercentage;
 	}
 
-	public static Promo findByCode(String code) {
+	public static Promo getPromo(String code) {
 		String query = "SELECT * FROM promos WHERE code = ?";
 
 		try {

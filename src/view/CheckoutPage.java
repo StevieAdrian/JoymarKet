@@ -1,6 +1,6 @@
 package view;
 
-import controller.CheckoutController;
+import controller.CheckoutHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -45,7 +45,7 @@ public class CheckoutPage extends Page {
         Button backBtn = new Button("Back");
 
         checkoutBtn.setOnAction(e -> {
-            String error = CheckoutController.checkout(promoField.getText());
+            String error = CheckoutHandler.checkout(promoField.getText());
 
             if (error != null) {
                 errorLabel.setText(error);

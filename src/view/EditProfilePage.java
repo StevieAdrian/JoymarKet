@@ -1,6 +1,6 @@
 package view;
 
-import controller.UserController;
+import controller.UserHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -67,7 +67,7 @@ public class EditProfilePage extends Page {
         backBtn.setPrefWidth(120);
 
         saveBtn.setOnAction(e -> {
-            String error = UserController.updateProfile(user.getIdUser(), nameField.getText(), phoneField.getText(), addressField.getText());
+            String error = UserHandler.updateProfile(user.getIdUser(), nameField.getText(), phoneField.getText(), addressField.getText());
 
             if (error != null) {
                 errorLabel.setText(error);

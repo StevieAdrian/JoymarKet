@@ -2,7 +2,7 @@ package view;
 
 import java.util.ArrayList;
 
-import controller.CourierController;
+import controller.CourierHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -68,7 +68,7 @@ public class AdminCourierPage extends Page {
 
         table.getColumns().addAll(idCol, nameCol, vehicleTypeCol, plateCol);
 
-        ArrayList<Courier> couriers = CourierController.getAllCouriers();
+        ArrayList<Courier> couriers = CourierHandler.getAllCouriers();
         table.getItems().addAll(couriers);
 
         VBox container = new VBox(10, header, table);

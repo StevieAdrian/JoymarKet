@@ -1,6 +1,6 @@
 package view.auth;
 
-import controller.AuthController;
+import controller.AuthHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
@@ -77,7 +77,7 @@ private VBox container;
 	protected void setEvent() {
 		// TODO Auto-generated method stub
 		loginButton.setOnAction(e -> {
-		    User user = AuthController.login(
+		    User user = AuthHandler.login(
 		        emailField.getText(),
 		        passwordField.getText()
 		    );

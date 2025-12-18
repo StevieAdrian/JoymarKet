@@ -2,7 +2,7 @@ package view;
 
 import javax.management.RuntimeErrorException;
 
-import controller.CartController;
+import controller.CartItemHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -57,7 +57,7 @@ public class AddToCartPage extends Page {
         buttonBox.setAlignment(Pos.CENTER);
 
         addBtn.setOnAction(e -> {
-            String error = CartController.addToCart(product, qtyField.getText());
+            String error = CartItemHandler.createCartItem(product, qtyField.getText());
             if (error != null) {
                 errorLabel.setText(error);
             } else {

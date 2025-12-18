@@ -1,6 +1,6 @@
 package view;
 
-import controller.DeliveryController;
+import controller.DeliveryHandler;
 import enums.Status;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -71,7 +71,7 @@ public class EditDeliveryStatusPage extends Page {
 	private void handleSave() {
         Status selected = statusBox.getValue();
 
-        String error = DeliveryController.updateDeliveryStatus(delivery.getIdOrder(), selected);
+        String error = DeliveryHandler.editDeliveryStatus(delivery.getIdOrder(), selected);
 
         if (error != null) errorLabel.setText(error);
         else AppManager.navigate(new CourierDeliveryPage(), "My Deliveries");

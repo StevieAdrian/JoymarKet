@@ -4,13 +4,13 @@ import java.util.ArrayList;
 
 import model.Product;
 
-public class ProductController {
+public class ProductHandler {
 
-	public static ArrayList<Product> getProducts() {
+	public static ArrayList<Product> getAllProducts() {
         return Product.getAllProducts();
     }
 	
-	public static String updateStock(String productId, String stockInput) {
+	public static String editProductStock(String productId, String stockInput) {
 	    if (stockInput.isEmpty()) return "Stock must be filled!";
 
 	    for (int i = 0; i < stockInput.length(); i++) {
@@ -20,7 +20,7 @@ public class ProductController {
 	    int stock = Integer.parseInt(stockInput);
 	    if (stock < 0) return "Stock cannot be negative!";
 
-	    boolean success = Product.updateStock(productId, stock);
+	    boolean success = Product.editProductStock(productId, stock);
 	    if (!success) return "Failed to update stock!";
 
 	    return null; 

@@ -1,6 +1,6 @@
 package view;
 
-import controller.ProductController;
+import controller.ProductHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -45,7 +45,7 @@ public class EditProductStockPage extends Page {
         Button cancelBtn = new Button("Cancel");
 
         saveBtn.setOnAction(e -> {
-            String error = ProductController.updateStock(
+            String error = ProductHandler.editProductStock(
                 product.getIdProduct(),
                 stockField.getText()
             );

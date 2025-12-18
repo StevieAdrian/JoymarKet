@@ -2,7 +2,7 @@ package view;
 
 import java.util.ArrayList;
 
-import controller.OrderController;
+import controller.OrderHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -91,7 +91,7 @@ public class AdminOrderPage extends Page {
 		
 		table.getColumns().addAll(idCol, customerCol, dateCol, statusCol, totalCol, actionCol);
 
-		ArrayList<OrderHeader> orders = OrderController.getAllOrders();
+		ArrayList<OrderHeader> orders = OrderHandler.getAllOrders();
 		table.getItems().addAll(orders);
 
 		backBtn.setOnAction(e ->

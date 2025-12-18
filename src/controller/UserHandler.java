@@ -2,7 +2,7 @@ package controller;
 
 import model.User;
 
-public class UserController {
+public class UserHandler {
 
 	public static String updateProfile(String idUser, String fullName, String phone, String address) {
         if (fullName.isEmpty()) return "Full name must be filled!";
@@ -15,7 +15,7 @@ public class UserController {
         if (phone.length() < 10 || phone.length() > 13) return "Phone must be 10-13 digits!";
         if (address.isEmpty()) return "Address must be filled!";
 
-        boolean success = User.updateProfile(idUser, fullName, phone, address);
+        boolean success = User.editProfile(idUser, fullName, phone, address);
         if (!success) return "Failed to update profile!";
 
         return null;
