@@ -1,6 +1,6 @@
 package view;
 
-import controller.TopUpController;
+import controller.TopUpHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -42,7 +42,7 @@ public class TopUpPage extends Page {
         Button backBtn = new Button("Back");
 
         topUpBtn.setOnAction(e -> {
-            String error = TopUpController.topUp(amountField.getText());
+            String error = TopUpHandler.topUp(amountField.getText());
             
             if (error != null) {
                 errorLabel.setText(error);

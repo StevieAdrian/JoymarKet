@@ -2,7 +2,7 @@ package view;
 
 import java.util.ArrayList;
 
-import controller.CartController;
+import controller.CartItemHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -11,7 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import model.Cart;
+import model.CartItem;
 import model.Product;
 import utils.AppManager;
 import view.page.Page;
@@ -56,16 +56,16 @@ public class ViewCartPage extends Page {
         table.add(new Label("Subtotal"), 3, 0);
         table.add(new Label("Action"), 4, 0);
 
-        ArrayList<Cart> carts = CartController.getCartItems();
+        ArrayList<CartItem> cartItems = CartItemHandler.getCartItems();
 
         int row = 1;
         double total = 0;
 
-        if (carts.isEmpty()) {
+        if (cartItems.isEmpty()) {
             table.add(new Label("Cart is empty"), 0, 1);
         }
 
-        for (Cart c : carts) {
+        for (CartItem c : cartItems) {
             Product p = c.getProduct();
 
             TextField qtyField = new TextField(String.valueOf(c.getQty()));
@@ -81,7 +81,7 @@ public class ViewCartPage extends Page {
             errorLabel.setStyle("-fx-text-fill: red;");
 
             updateBtn.setOnAction(e -> {
-                String error = CartController.updateCart(p, qtyField.getText());
+                String error = CartItemHandler.editCartItem(p, qtyField.getText());
                 if (error != null) {
                     errorLabel.setText(error);
                 } else {
@@ -90,7 +90,7 @@ public class ViewCartPage extends Page {
             });
 
             removeBtn.setOnAction(e -> {
-                CartController.removeFromCart(p);
+                CartItemHandler.deleteCartItem(p);
                 AppManager.navigate(new ViewCartPage(), "My Cart");
             });
 
@@ -109,7 +109,7 @@ public class ViewCartPage extends Page {
         totalLabel.setStyle("-fx-font-weight: bold;");
 
         Button checkoutBtn = new Button("Checkout");
-        checkoutBtn.setDisable(carts.isEmpty()); 
+        checkoutBtn.setDisable(cartItems.isEmpty()); 
 
         checkoutBtn.setOnAction(e -> {
         	AppManager.navigate(new CheckoutPage(), "Checkout");

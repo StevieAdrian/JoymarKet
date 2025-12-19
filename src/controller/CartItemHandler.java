@@ -2,14 +2,14 @@ package controller;
 
 import java.util.ArrayList;
 
-import model.Cart;
+import model.CartItem;
 import model.Product;
 import model.User;
 import utils.AppManager;
 
-public class CartController {
+public class CartItemHandler {
 
-    public static String addToCart(Product product, String qtyText) {
+    public static String createCartItem(Product product, String qtyText) {
 
         if (qtyText.isEmpty())
             return "Quantity must be filled!";
@@ -29,7 +29,7 @@ public class CartController {
 
         User user = AppManager.getCurrentUser();
 
-        boolean success = Cart.insertOrUpdate(
+        boolean success = CartItem.insertOrUpdate(
             user.getIdUser(),
             product.getIdProduct(),
             qty
@@ -41,11 +41,11 @@ public class CartController {
         return null;
     }
     
-    public static ArrayList<Cart> getCartItems() {
-        return Cart.getByCustomer(AppManager.getCurrentUser().getIdUser());
+    public static ArrayList<CartItem> getCartItems() {
+        return CartItem.getCartItems(AppManager.getCurrentUser().getIdUser());
     }
 
-    public static String updateCart(Product product, String qtyText) {
+    public static String editCartItem(Product product, String qtyText) {
 
         if (qtyText.isEmpty())
             return "Quantity must be filled!";
@@ -63,7 +63,7 @@ public class CartController {
         if (qty > product.getStock())
             return "Quantity exceeds product stock!";
 
-        boolean success = Cart.updateQty(
+        boolean success = CartItem.editCartItem(
             AppManager.getCurrentUser().getIdUser(),
             product.getIdProduct(),
             qty
@@ -75,9 +75,9 @@ public class CartController {
         return null;
     }
 
-    public static String removeFromCart(Product product) {
+    public static String deleteCartItem(Product product) {
 
-        boolean success = Cart.remove(
+        boolean success = CartItem.deleteCartItem(
             AppManager.getCurrentUser().getIdUser(),
             product.getIdProduct()
         );

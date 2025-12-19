@@ -2,7 +2,7 @@ package view;
 
 import java.util.ArrayList;
 
-import controller.DeliveryController;
+import controller.DeliveryHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -84,7 +84,7 @@ public class CourierDeliveryPage extends Page {
 
         table.getColumns().addAll(orderCol, statusCol, actionCol);
 
-        ArrayList<Delivery> deliveries = DeliveryController.getCourierDeliveries();
+        ArrayList<Delivery> deliveries = DeliveryHandler.getCourierDeliveries();
         table.getItems().addAll(deliveries);
 
         backBtn.setOnAction(e ->

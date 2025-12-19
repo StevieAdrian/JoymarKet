@@ -4,7 +4,7 @@ import javafx.scene.control.ToggleGroup;
 import model.Customer;
 import model.User;
 
-public class AuthController {
+public class AuthHandler {
 
 	public static String register(User user, String confirmPassword) {
 		if (user.getIdUser().isEmpty()) return "User ID must be filled!";
@@ -35,7 +35,7 @@ public class AuthController {
             user.getGender()
         );
 		
-		boolean success = customer.register();
+		boolean success = customer.registerAccount();
 		if (!success) return "Failed to register user!";
 		
 		return null;

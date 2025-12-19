@@ -2,8 +2,8 @@ package view;
 
 import java.util.ArrayList;
 
-import controller.CustomerController;
-import controller.ProductController;
+import controller.CustomerHandler;
+import controller.ProductHandler;
 import enums.Role;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -42,7 +42,7 @@ public class ProductPage extends Page{
         Label title = new Label("Product List");
         title.setStyle("-fx-font-size: 22px; -fx-font-weight: bold;");
 
-        Label balanceLabel = new Label("Balance: Rp " + CustomerController.getCurrentBalance());
+        Label balanceLabel = new Label("Balance: Rp " + CustomerHandler.getCurrentBalance());
         balanceLabel.setStyle("-fx-font-size: 14px;");
 
         Button viewCartBtn = new Button("View Cart");
@@ -122,7 +122,7 @@ public class ProductPage extends Page{
 
         table.getColumns().addAll(nameCol, priceCol, stockCol, categoryCol, actionCol);
 
-        ArrayList<Product> products = ProductController.getProducts();
+        ArrayList<Product> products = ProductHandler.getAllProducts();
 
         table.getItems().addAll(products);
 

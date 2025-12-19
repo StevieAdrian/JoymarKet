@@ -2,8 +2,8 @@ package view;
 
 import java.util.ArrayList;
 
-import controller.CustomerController;
-import controller.OrderController;
+import controller.CustomerHandler;
+import controller.OrderHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -42,7 +42,7 @@ public class OrderHistoryPage extends Page {
 		Label title = new Label("Order History");
         title.setStyle("-fx-font-size: 22px; -fx-font-weight: bold;");
 
-        Label balanceLabel = new Label("Balance: Rp " + CustomerController.getCurrentBalance());
+        Label balanceLabel = new Label("Balance: Rp " + CustomerHandler.getCurrentBalance());
         balanceLabel.setStyle("-fx-font-size: 14px;");
 
         Button backBtn = new Button("Back to Products");
@@ -72,7 +72,7 @@ public class OrderHistoryPage extends Page {
 
         table.getColumns().addAll(idCol, dateCol, statusCol, totalCol);
 
-        ArrayList<OrderHeader> orders = OrderController.getCustomerOrders();
+        ArrayList<OrderHeader> orders = OrderHandler.getCustomerOrders();
         table.getItems().addAll(orders);
 
         backBtn.setOnAction(e ->

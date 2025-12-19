@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-import model.Cart;
+import model.CartItem;
 import model.Customer;
 import model.OrderDetail;
 import model.OrderHeader;
@@ -12,7 +12,7 @@ import model.Product;
 import model.Promo;
 import utils.AppManager;
 
-public class CheckoutController {
+public class CheckoutHandler {
 
     private static String generateOrderId() {
         DateTimeFormatter id = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
@@ -23,12 +23,12 @@ public class CheckoutController {
 	public static String checkout(String promoCode) {
         String customerId = AppManager.getCurrentUser().getIdUser();
 
-        ArrayList<Cart> carts = Cart.getByCustomer(customerId);
+        ArrayList<CartItem> cartItems = CartItem.getCartItems(customerId);
 
-        if (carts.isEmpty()) return "Cart is empty!";
+        if (cartItems.isEmpty()) return "Cart is empty!";
 
         double total = 0;
-        for (Cart c : carts) {
+        for (CartItem c : cartItems) {
             total += c.getSubtotal();
         }
 
@@ -36,7 +36,7 @@ public class CheckoutController {
         double discountPercent = 0;
 
         if (promoCode != null && !promoCode.isEmpty()) {
-            Promo promo = Promo.findByCode(promoCode);
+            Promo promo = Promo.getPromo(promoCode);
             
             if (promo == null) return "Promo code is invalid!";
 
@@ -53,14 +53,14 @@ public class CheckoutController {
 
         String orderId = generateOrderId();
 
-        boolean headerSuccess = OrderHeader.create(orderId, customerId, promoId, finalTotal);
+        boolean headerSuccess = OrderHeader.createOrderHeader(orderId, customerId, promoId, finalTotal);
 
         if (!headerSuccess) return "Failed to create order!";
 
-        for (Cart c : carts) {
+        for (CartItem c : cartItems) {
             Product p = c.getProduct();
 
-            boolean detailSuccess = OrderDetail.create(orderId, p.getIdProduct(), c.getQty());
+            boolean detailSuccess = OrderDetail.createOrderDetail(orderId, p.getIdProduct(), c.getQty());
             if (!detailSuccess) return "Failed to create order detail!";
 
             boolean stockSuccess = Product.reduceStock(p.getIdProduct(), c.getQty());
@@ -71,7 +71,7 @@ public class CheckoutController {
 
         if (!balanceSuccess) return "Failed to update balance!";
         
-        Cart.clear(customerId);
+        CartItem.clear(customerId);
 
         return null;
     }

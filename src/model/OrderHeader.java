@@ -21,7 +21,7 @@ public class OrderHeader {
         this.totalAmount = totalAmount;
     }
     
-	public static boolean create(String idOrder, String idCustomer, String idPromo, double totalAmount) {
+	public static boolean createOrderHeader(String idOrder, String idCustomer, String idPromo, double totalAmount) {
         String query =
             "INSERT INTO order_headers (idOrder, idCustomer, idPromo, status, orderedAt, totalAmount) " +
             "VALUES (?, ?, ?, ?, ?, ?)";
@@ -37,7 +37,7 @@ public class OrderHeader {
         );
     }
 	
-	public static ArrayList<OrderHeader> findByCustomer(String idCustomer) {
+	public static ArrayList<OrderHeader> getCustomerOrders(String idCustomer) {
         ArrayList<OrderHeader> orders = new ArrayList<>();
 
         String query = "SELECT * FROM order_headers WHERE idCustomer = ?";
@@ -60,7 +60,7 @@ public class OrderHeader {
         return orders;
     }
 	
-	public static ArrayList<OrderHeader> findAll() {
+	public static ArrayList<OrderHeader> getAllOrders() {
 	    ArrayList<OrderHeader> orders = new ArrayList<>();
 
 	    String query = "SELECT * FROM order_headers";

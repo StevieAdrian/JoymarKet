@@ -13,7 +13,7 @@ public class Customer extends User {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public boolean register() {
+	public boolean registerAccount() {
         boolean userInserted = User.create(this);
 		if (!userInserted) return false;
 
@@ -37,7 +37,7 @@ public class Customer extends User {
 	    return 0;
 	}
 
-	public static boolean topUp(String idCustomer, double amount) {
+	public static boolean topUpBalance(String idCustomer, double amount) {
 	    String query = "UPDATE customers SET balance = balance + ? WHERE idUser = ?";
 	    return DatabaseConnection.update(query, amount, idCustomer);
 	}

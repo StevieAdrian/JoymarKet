@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 import model.Courier;
 
-public class CourierController {
+public class CourierHandler {
 
 	public static ArrayList<Courier> getAllCouriers() {
-	    return Courier.findAll();
+	    return Courier.getAllCouriers();
 	}
 
 }

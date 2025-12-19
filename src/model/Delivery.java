@@ -17,7 +17,7 @@ public class Delivery {
         this.status = status;
     }
 
-    public static boolean create(String idOrder, String idCourier) {
+    public static boolean createDelivery(String idOrder, String idCourier) {
         String query = "INSERT INTO deliveries (idOrder, idCourier, status) VALUES (?, ?, ?)";
 
         return DatabaseConnection.update(query, idOrder, idCourier, Status.IN_PROGRESS.name());
@@ -44,7 +44,7 @@ public class Delivery {
         return list;
     }
 
-    public static boolean updateStatus(String idOrder, String idCourier, Status status) {
+    public static boolean editDeliveryStatus(String idOrder, String idCourier, Status status) {
         String query = "UPDATE deliveries SET status = ? WHERE idOrder = ? AND idCourier = ?";
 
         return DatabaseConnection.update(query, status.name(), idOrder, idCourier);

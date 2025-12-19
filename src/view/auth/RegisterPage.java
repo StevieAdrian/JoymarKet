@@ -8,7 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import controller.AuthController;
+import controller.AuthHandler;
 import enums.Role;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -133,7 +133,7 @@ public final class RegisterPage extends Page {
 				Role.CUSTOMER
 			);
 			
-			String error = AuthController.register(user, confirmPasswordField.getText());
+			String error = AuthHandler.register(user, confirmPasswordField.getText());
 			
 			if (error != null) errorLabel.setText(error);
 			else errorLabel.setText("");
